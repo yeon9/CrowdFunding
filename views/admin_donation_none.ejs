@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>CrowdFunding</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+* { font-family: NanumGothic, 'Malgun Gothic'; }
+
+html, body { overflow-x: hidden; /* 좁은 화면에서 스크롤 방지 */ }
+body { padding-top: 53px; margin: 0 auto;}
+footer { padding: 30px 0; }
+
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+ 
+<div id="wrap">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/admin"><b>CrowdFunding</b></a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav pull-right">
+<% if(login != 'admin'){%>
+<!--	<script>location.href='/'; </script> -->
+        <li><a href="/login"><b>로그인</b></a></li>
+        <li><a href="/reg"><b>회원가입</b></a></li>
+        <li><a href="/find"><b>아이디/비밀번호 찾기</b></a></li>
+<% } else {%>
+        <li><a href="/logout"><b>로그아웃</b></a></li>
+        <li><a href="/mypage/edit/password"><b>비밀번호 변경</b></a></li>
+<% } %>
+      </ul>
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</div><!-- /.navbar -->
+
+ <div class="bs-example bs-navbar-top-example" data-example-id="navbar-static-to-top">
+    <div class="navbar navbar-default navbar-static-top"> 
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="/admin/project"><b>프로젝트</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+	 <li class="active"><a href="/admin/donation"><b>펀딩</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+
+	<li><a href="/admin/member"><b>사용자 관리</b></a></li>
+           <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/mediation"><b>투자 의향 요청 내역</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/fee"><b>중개 수수료 관리</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/apply"><b>프로젝트 페이지 개설 신청 관리</b></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+     </div>
+   </div> 
+ </div>
+    </div>
+  </div><!-- /example -->
+
+<div class="container" style="width:100%;" align="center">
+<div style= "width=10%;" > 
+      <div class="col-xs-4 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="list-group">
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+     <a href="/admin/donation" class="list-group-item">전체</a> <!-- class 에 active 추가 가능 -->
+        <a href="/admin/donation/none" class="list-group-item">미입금 펀딩</a>
+        <a href="/admin/donation/done" class="list-group-item">입금 펀딩</a>
+      </div>
+    </div>
+</div>
+
+<div style="width:65%;"><!-- style="display:inline-block;"> -->
+    <span><h3 align="left"><b>펀딩 목록(미입금)</b></h3></span>
+
+<br/>
+<br/>
+<br/>
+<br/>
+    <table class="table table-hover">
+	<tr class="active" align="center">
+	<td>No.</td>
+	<td>프로젝트 제목</td>
+	<td>후원자 아이디</td>
+	<td>입금자 명</td>
+	<td>후원 금액</td>
+	<td>은행</td>
+	<td>계좌 번호</td>
+	<td>입금 상태</td>
+	<td>입금 상태 변경</td>
+        </tr>
+<% data.forEach(function(item,index){ %>
+        <tr align="center">
+	<td><%=index+1 %></td>
+	<td><a href="/project/detail/<%=item.project_id%>"><%=item.title %></a></td>
+	<td><%=item.userid_donation %></td>
+	<td><%=item.name %></td>
+	<td><%=item.money %></td>
+	<td><%=item.bank %></td>
+	<td><%=item.account %></td>
+	<td><%=item.status_donation %></td>
+	<td><a class="btn btn-success" href="/admin/donation/none?update=done&what=<%=item.donation_id%>&money=<%=item.money+item.gather%>&project=<%=item.project_id%>" role="button"><b>입금</b></a></td>
+	
+  </form>
+        </tr>
+<% }); %>
+    </table>
+</div>
+</div>
+
+</body>
+</html>
+
+

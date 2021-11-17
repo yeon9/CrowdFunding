@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>CrowdFunding</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+* { font-family: NanumGothic, 'Malgun Gothic'; }
+
+html, body { overflow-x: hidden; }
+body { padding-top: 53px; margin: 0 auto;}
+footer { padding: 30px 0; }
+
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<script>
+    window.onload = function(){
+	document.getElementById("search").onClick = function(){
+	    var text = getElementById("text").value;
+	    location.href= '/admin/apply?'+ text ; 
+	};
+    };
+</script> 
+</head>
+<body>
+ 
+<div id="wrap">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/admin"><b>CrowdFunding</b></a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="/logout"><b>로그아웃</b></a></li>
+        <li><a href="/mypage/edit/password"><b>비밀번호 변경</b></a></li>
+      </ul>
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</div><!-- /.navbar -->
+
+ <div class="bs-example bs-navbar-top-example" data-example-id="navbar-static-to-top">
+    <div class="navbar navbar-default navbar-static-top"> 
+      <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="/admin/project"><b>프로젝트</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/project"><b>사용자 관리</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/mediation"><b>투자 의향 요청 내역</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li class="active"><a href="/admin/fee"><b>중개 수수료 관리</b></a></li>
+            <li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></li>
+            <li><a href="/admin/apply"><b>프로젝트 페이지 개설 신청 관리</b></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+     </div>
+   </div> 
+ </div>
+    </div>
+  </div><!-- /example -->
+
+<div style="width:66%;; margin-left:15%" align="center">
+
+<div class="container" style="width:100%;" align="center">
+<br/>
+
+<div>
+    <form method="post" action="/admin/fee">
+
+	<span class="col-sm-2"><h4>월별 조회</h4></span>
+	<div class="form-group">
+    <div class="col-sm-2"> 
+        <select class="form-control" name="year" id="year">
+        <option>-----------</option>
+	    <option>2016</option>
+	    <option>2017</option>
+	    <option>2018</option>
+	    <option>2019</option>
+	    <option>2020</option>
+	    <option>2021</option>
+	    <option>2022</option>
+    	</select>
+    </div>
+
+	<span class="col-sm-1"><h4>년</h4></span>
+
+    <div class="col-sm-1">    
+        <select class="form-control" name="month" id="month">
+            <option>---</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+    </div> 
+    <span class="col-sm-1"><h4>월</h4></span>
+	<span><input type="submit" class="col-sm-1 btn btn-default" value="조회"></span>
+    </div>
+    </form>
+
+</div> 
+</div>
+
+
+<br/><br/>
+
+<% data.forEach(function(item, index){
+	total += item.fee;
+});
+	if(year == 0)
+		year='';
+	else
+		year=year+' 년';
+	if(month == 0)
+		month ='';
+	else
+		month=month+' 월';
+	%>
+<h3 align="right" style="color:#DC143C;"><b><%=year%>  <%=month%>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;총 &nbsp;합 : <%= total %> </b></h3>
+<br/>
+<br/>
+
+    <table class="table table-hover">
+      <tr class="active" align="center">
+	<td>입금날짜</td>
+	<td>투자자</td>
+	<td>프로젝트 이름</td>
+	<td>창작자</td>
+	<td>중개 수수료</td>
+      </tr>
+<% data.forEach(function(item,index){ %>
+      <tr align="center">
+	<td><%=item.date_fee %></td>
+	<td><%=item.investor %></td>
+	<td><%=item.project_title%></td>
+	<td><%=item.creator %></td>
+	<td><%=item.fee%></td>
+      </tr>
+<% }); %>
+    </table>
+</div>
+
+<br/><br/><br/><br/>
+
+</body>
+</html>
